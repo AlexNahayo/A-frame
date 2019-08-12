@@ -7,5 +7,5 @@ This Project illustrates the capabilities with A-Frame using the Web Audio API. 
 
 
 
-## View Application  [Here](https://lying-beetle.glitch.me)
+## View Application:  [Here](https://lying-beetle.glitch.me)
 
