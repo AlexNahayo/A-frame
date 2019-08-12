@@ -5,5 +5,5 @@ A-Frame research project with Web Audio API interegartion.
 
 
 
-## View Applicationn  [example](https://lying-beetle.glitch.me)
+## View Application  [Here](https://lying-beetle.glitch.me)
 
