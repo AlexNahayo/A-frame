@@ -1,0 +1,221 @@
+<!-- /*  
+   This Project illustrates the capabilities with A-Frame using the Web Audio API. 
+   The project itself consists of three cubes in the VR Space all assigned to an audio file. These audio stems from a multitrack track mix.
+   The "blue" box is assigned vocals and harmonies, the "red" box is assigned the synth and finally, the "green" box is assigned drums.
+   The core idea sprung from exploring a few examples such as https://webaudiotech.com/sites/webaudio_webvr/, https://threejs.org/examples/#webaudio_orientation, and https://experiments.withgoogle.com/webvr/inside-music/view/
+   to name a few. My main idea was to use A-frame as an auditory/visual experience. Hence, map the cubes to stems of a song and allow the user to navigated through the different sound with positional audio( moving back and forth and around an audio source for spatial functionality). 
+   In addition, I wanted to add functionality which also allowed the user to mute the different stems i.e. vocals, drums, etc. to focus on any particular element of the chosen track. 
+   
+   When it came to the implementation I only managed to incorporate the visual objects, the global pause and play function and the integration of the audio files into A-frame.
+   The main problems I encountered throughout was a lack of sound compatibilities, the documentation on sound integration, cross-browser issues when it came to using developer tools and working with audio on the web.
+   @author Alex Nahayo
+   @version 12/08/2019
+
+ */ -->
+
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Basic Scene with Environment - A-Frame</title>
+    <meta name="description" content="Basic Scene with Environment - A-Frame">
+    <link rel="stylesheet" type="text/css" href="index.css" media="screen" />
+    <script src="https://aframe.io/releases/0.9.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-environment-component/dist/aframe-environment-component.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script>
+      //for hovering effect with collour change. 
+      AFRAME.registerComponent('change-color-on-hover', {
+        //schema color property is set to empty string because it will no change the original colour of the different as they are hard coded down below in th box tag
+    schema: {
+      color: {default: ''}
+    },
+    
+   //init function allows functionality.     
+    init: function () {
+      var data = this.data;
+      //targeting any box that user user hovers over.
+      var el = this.el;  // <a-box>
+      //material is a attrivute that has color as one of this properties , hence why the  dot operater is used to acces color (i.e. fro each hoverd box)
+      var defaultColor = el.getAttribute('material').color;  
+      //event handler for mousenter which is a knonw parameter in event handler.
+      el.addEventListener('mouseenter', function () {
+        //once user hovered it will check the box tag and replace the new color which is set below in the box tag.
+        el.setAttribute('color', data.color);
+        
+      });
+      //similarly, once the user leaves the box with cursor the color is set back to default which is the original colour set in the box tag.
+      el.addEventListener('mouseleave', function () {
+        el.setAttribute('color', defaultColor);
+      });
+    }
+  });
+   
+</script>
+  </head>
+  <body>
+
+    <a-scene> 
+      <a-assets id="soundtrack">     
+        <audio id="audio1" preload="auto" crossorigin="anonymous" src="https://cdn.glitch.com/14b4a00b-89dc-4587-9eb9-fd741cb10f10%2FVocals.mp3?v=1565080681195"></audio> 
+        <audio id="audio2" preload="auto" crossorigin="anonymous" src="https://cdn.glitch.com/14b4a00b-89dc-4587-9eb9-fd741cb10f10%2FMain%20Synth.mp3?v=1565080676859"></audio>   
+        <audio id="audio3" preload="auto" crossorigin="anonymous" src="https://cdn.glitch.com/14b4a00b-89dc-4587-9eb9-fd741cb10f10%2FDrums.mp3?v=1565080672571"></audio> 
+
+      </a-assets>
+        <a-box id="box1" color = "blue" position="-3.04643 1.93264 -3.66834" scale ="2 2 2" change-color-on-hover="color: #00BFFF" sound="src: #audio1"> </a-box>
+        <a-box id="box2" color = "red" position="3.09395 2 -3.59532" scale ="2 2 2" change-color-on-hover="color: #FF4500" sound="src: #audio2" ></a-box>
+        <a-box id="box3" color = "green" position="-3.04643 1.93264 3.41262" scale ="2 2 2"  change-color-on-hover="color: #ADFF2F" sound="src: #audio3" ></a-box>
+
+      <a-entity visible="" id="musicpanel" scale="1 0.99 1" rotation="0 360 0" position ="0 2.391 -8.946" color ="yellow">
+         <a-plane width="2.5" height="3.5" position="0 -.06 0" shader="flat" src="#flowers" side="double"  ></a-plane>
+            <a-plane position="0 -.5 .01" width="2" height=".5" transparent="true" opacity=".9" color="#191817" text="value: Artist - Nahayo \n Song - Trip ; width: 4; align:center"></a-plane>
+            <a-plane id="playbox"  depth=".01" scale=".3 .3 .3" position="-.673 -1.22 .01" shader="flat" width="2" height="2" material="color:#191817; shader: flat" transparent="true" opacity=".9" change-color-on-hover="color: #00BFFF" audioplayer >
+            <a-triangle id="playicon" color="white" depth=".01" scale="1 1 1" rotation="0 0 -90" 
+             position=".1 -.02 .06" shader="flat" width="2" height="2" vertex-a="0 .3 0" >
+            </a-triangle>
+         </a-plane> 
+         <a-plane id="pausebox" scale=".3 .3 .3" position=".673 -1.22 .01" shader="flat" width="2" height="2" material="color:#191817; shader: flat" transparent="true" opacity=".9" change-color-on-hover="color: #00BFFF" audiopause >
+            <a-plane id="pauseiconleft" color="white" depth=".1" scale="1 1 1" position="-.4 0 .06" shader="flat" width=".5" height="1"  ></a-plane>
+            <a-plane id="pauseiconright" color="white" depth=".1" scale="1 1 1" position=".4 0 .06" shader="flat" width=".5" height="1"  ></a-plane>
+         </a-plane>
+      </a-entity>
+    
+      <a-entity camera look-controls wasd-controls position="0 0 0" rotation-reader >  
+        <a-camera rotation-reader> 
+          <a-cursor color="black"></a-cursor>
+        </a-camera>   
+      </a-entity>    
+    </a-scene>
+<script>
+
+    //playing the audio via play button.   
+    //the A-frame component customized parameter 'audioplayer' is used inside the plane tag with id 'playbox'
+    AFRAME.registerComponent('audioplayer', {
+      //init fnction for functionality
+    init:function() {
+        //setting the initilal playing variable to false (music wont start until this boolean inversed)
+       let playing = false;
+       //setting all boxes to individual queryselector whicb will allow us acces to all the atrributes inside the tag, from here we will use the src attribute to the play the audio associated with each box.
+       let audio1 = document.querySelector("#box1");
+       let audio2 = document.querySelector("#box2");
+       let audio3 = document.querySelector("#box3");
+         //this eventlister will know which box was clicked from the unique qeury selctors metioned above so that they play the audio files associated 
+         this.el.addEventListener('click', () => {
+              //when playing is set to true then play audio simultaneously.
+              if(!playing) {
+                  //playSound method can be found on https://aframe.io/docs/0.9.0/components/sound.html  
+                  audio1.components.sound.playSound();
+                  audio2.components.sound.playSound(); 
+                  audio3.components.sound.playSound(); 
+                 } 
+               //playing contuines to be true until we either pause the song or allow it to play to the end.
+               playing = !playing;
+         });
+     }
+})
+
+ //Pausing the audio via pause button. 
+ AFRAME.registerComponent('audiopause', {
+  //init fnction for functionality 
+  init:function() {
+     //the audio files will only be pause when playing is true.
+     let playing = true;
+    //setting all boxes to individual queryselector whicb will allow us acces to all the atrributes inside the tag, from here we will use the src attribute to the pause the audio associated with each box.
+     let audio1 = document.querySelector("#box1");
+     let audio2 = document.querySelector("#box2");
+     let audio3 = document.querySelector("#box3");
+       this.el.addEventListener('click', () => {
+            if(playing) {
+                //pauseSound method can be found on https://aframe.io/docs/0.9.0/components/sound.html 
+                audio1.components.sound.pauseSound();
+                audio2.components.sound.pauseSound(); 
+                audio3.components.sound.pauseSound(); 
+                //curretime property (at default it's at 0 ) will allow us to keep track of the time when track is stored so when we click play again it will continue at the current time.
+                audio1.currentTime = 0;
+                audio2.currentTime = 0;
+                audio3.currentTime = 0;
+               } 
+             //playing will styay true until we set iot to flas when the user triggers it to false.
+             playing = playing;
+       });
+    }
+})     
+//NOT RECOMMENED UNELSS YOU LOAD IN DIFFERENT TRACKS AS IS MAYBE A PLAYLUST OF SONG. 
+//With this example all the audio files dependent on each other so it's not a good idea to pause/pause each of the sounds as it will result in sync issues( commented for this reason). 
+  
+
+//     //blue box.
+//     // is playing is set to false to begin with as audio will turned of.
+//     var isPlaying1 = false;  
+//     //setting box1 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
+//     var sound1 = document.querySelector('#box1');  
+//     //this if startement removes null error.
+//     if(sound1){
+//        //event listiner for click function which will pause audio.
+//        sound1.addEventListener('click', function () {
+//       if(isPlaying1){
+//         //pauseSound method is used hear.
+//         sound1.components.sound.pauseSound(); 
+//         //we then set isplaying variable to false.
+//         isPlaying1 = false; 
+//      }
+//       else{
+//         //playsound methed is used.
+//         sound1.components.sound.playSound(); 
+//         //we then set the isplaying to true once aunce is playing.
+//         isPlaying1 = true;
+//         }
+//     }); 
+//   }  
+  
+//     //red box.  
+//     // is playing is set to false to begin with as audio will turned of.
+//     var isPlaying2 = false;  
+//     //setting box2 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
+//     var sound2  = document.querySelector('#box2');  
+//     //this if startement removes null error.
+//     if(sound2){
+//        //event listiner for click function which will pause audio.
+//        sound2.addEventListener('click', function () {
+//       if(isPlaying2){
+//         //pauseSound method is used hear.
+//         sound2.components.sound.pauseSound(); 
+//         //we then set isplaying variable to false.
+//         isPlaying2 = false; 
+//      }
+//       else{
+//         //playsound methed is used.
+//         sound2.components.sound.playSound(); 
+//         //we then set the isplaying to true once aunce is playing.
+//         isPlaying2 = true;
+//         }
+//     });
+//   }  
+//     //green box.
+//     // is playing is set to false to begin with as audio will turned of.
+//     var isPlaying3 = false;  
+//     //setting box2 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
+//     var sound3 = document.querySelector('#box3');  
+//     //this if startement removes null error.
+//     if(sound3){
+//        //event listiner for click function which will pause audio.
+//        sound3.addEventListener('click', function () {
+//      if(isPlaying3){
+//        //pauseSound method is used hear.
+//        sound3.components.sound.pauseSound(); 
+//        //we then set isplaying variable to false.
+//       isPlaying3 = false; 
+//      }
+//       else{
+//         //playsound methed is used.
+//         sound3.components.sound.playSound(); 
+//         //we then set the isplaying to true once aunce is playing.
+//         isPlaying3 = true;
+//         }
+//     });
+//   }  
+    </script>
+  </body>
+</html>
+
+
