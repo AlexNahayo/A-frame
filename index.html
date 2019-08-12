@@ -143,77 +143,76 @@
 //NOT RECOMMENED UNELSS YOU LOAD IN DIFFERENT TRACKS AS IS MAYBE A PLAYLUST OF SONG. 
 //With this example all the audio files dependent on each other so it's not a good idea to pause/pause each of the sounds as it will result in sync issues( commented for this reason). 
   
-
-//     //blue box.
-//     // is playing is set to false to begin with as audio will turned of.
-//     var isPlaying1 = false;  
-//     //setting box1 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
-//     var sound1 = document.querySelector('#box1');  
-//     //this if startement removes null error.
-//     if(sound1){
-//        //event listiner for click function which will pause audio.
-//        sound1.addEventListener('click', function () {
-//       if(isPlaying1){
-//         //pauseSound method is used hear.
-//         sound1.components.sound.pauseSound(); 
-//         //we then set isplaying variable to false.
-//         isPlaying1 = false; 
-//      }
-//       else{
-//         //playsound methed is used.
-//         sound1.components.sound.playSound(); 
-//         //we then set the isplaying to true once aunce is playing.
-//         isPlaying1 = true;
-//         }
-//     }); 
-//   }  
+    //blue box.
+    // is playing is set to false to begin with as audio will turned of.
+    var isPlaying1 = false;  
+    //setting box1 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
+    var sound1 = document.querySelector('#box1');  
+    //this if startement removes null error.
+    if(sound1){
+       //event listiner for click function which will pause audio.
+       sound1.addEventListener('click', function () {
+      if(isPlaying1){
+        //pauseSound method is used hear.
+        sound1.components.sound.pauseSound(); 
+        //we then set isplaying variable to false.
+        isPlaying1 = false; 
+     }
+      else{
+        //playsound methed is used.
+        sound1.components.sound.playSound(); 
+        //we then set the isplaying to true once aunce is playing.
+        isPlaying1 = true;
+        }
+    }); 
+  }  
   
-//     //red box.  
-//     // is playing is set to false to begin with as audio will turned of.
-//     var isPlaying2 = false;  
-//     //setting box2 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
-//     var sound2  = document.querySelector('#box2');  
-//     //this if startement removes null error.
-//     if(sound2){
-//        //event listiner for click function which will pause audio.
-//        sound2.addEventListener('click', function () {
-//       if(isPlaying2){
-//         //pauseSound method is used hear.
-//         sound2.components.sound.pauseSound(); 
-//         //we then set isplaying variable to false.
-//         isPlaying2 = false; 
-//      }
-//       else{
-//         //playsound methed is used.
-//         sound2.components.sound.playSound(); 
-//         //we then set the isplaying to true once aunce is playing.
-//         isPlaying2 = true;
-//         }
-//     });
-//   }  
-//     //green box.
-//     // is playing is set to false to begin with as audio will turned of.
-//     var isPlaying3 = false;  
-//     //setting box2 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
-//     var sound3 = document.querySelector('#box3');  
-//     //this if startement removes null error.
-//     if(sound3){
-//        //event listiner for click function which will pause audio.
-//        sound3.addEventListener('click', function () {
-//      if(isPlaying3){
-//        //pauseSound method is used hear.
-//        sound3.components.sound.pauseSound(); 
-//        //we then set isplaying variable to false.
-//       isPlaying3 = false; 
-//      }
-//       else{
-//         //playsound methed is used.
-//         sound3.components.sound.playSound(); 
-//         //we then set the isplaying to true once aunce is playing.
-//         isPlaying3 = true;
-//         }
-//     });
-//   }  
+    //red box.  
+    // is playing is set to false to begin with as audio will turned of.
+    var isPlaying2 = false;  
+    //setting box2 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
+    var sound2  = document.querySelector('#box2');  
+    //this if startement removes null error.
+    if(sound2){
+       //event listiner for click function which will pause audio.
+       sound2.addEventListener('click', function () {
+      if(isPlaying2){
+        //pauseSound method is used hear.
+        sound2.components.sound.pauseSound(); 
+        //we then set isplaying variable to false.
+        isPlaying2 = false; 
+     }
+      else{
+        //playsound methed is used.
+        sound2.components.sound.playSound(); 
+        //we then set the isplaying to true once aunce is playing.
+        isPlaying2 = true;
+        }
+    });
+  }  
+    //green box.
+    // is playing is set to false to begin with as audio will turned of.
+    var isPlaying3 = false;  
+    //setting box2 to queryselector whicb will allow us acces to all the atrributes inside the box tag.
+    var sound3 = document.querySelector('#box3');  
+    //this if startement removes null error.
+    if(sound3){
+       //event listiner for click function which will pause audio.
+       sound3.addEventListener('click', function () {
+     if(isPlaying3){
+       //pauseSound method is used hear.
+       sound3.components.sound.pauseSound(); 
+       //we then set isplaying variable to false.
+      isPlaying3 = false; 
+     }
+      else{
+        //playsound methed is used.
+        sound3.components.sound.playSound(); 
+        //we then set the isplaying to true once aunce is playing.
+        isPlaying3 = true;
+        }
+    });
+  }  
     </script>
   </body>
 </html>
